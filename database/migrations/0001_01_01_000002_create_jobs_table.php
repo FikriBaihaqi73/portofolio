@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('queue')->index();
             $table->longText('payload');
-            $table->unsignedTinyInteger('attempts');
-            $table->unsignedInteger('reserved_at')->nullable();
-            $table->unsignedInteger('available_at');
-            $table->unsignedInteger('created_at');
+            $table->smallInteger('attempts')->check('attempts >= 0');
+            $table->integer('reserved_at')->nullable()->check('reserved_at >= 0');
+            $table->integer('available_at')->check('available_at >= 0');
+            $table->integer('created_at')->check('created_at >= 0');
         });
 
         Schema::create('job_batches', function (Blueprint $table) {
